@@ -110,13 +110,13 @@ body{
     <input type="text" placeholder="Search books..." class="search">
     <div class="icons">
         <button onclick="document.location='profile.html'" class="Account">👤 Account</button>
-        <button class="Cart">🛒 Cart</button>
+        <!-- 🔥 Cart Button Fixed -->
+        <button class="Cart" onclick="goToCart()">🛒 Cart</button>
     </div>
 </header>
 
 <section class="books">
 
-<!-- 🔥 1. New Releases -->
 <h2>New Releases</h2>
 <div class="book-grid">
 
@@ -146,8 +146,6 @@ body{
 
 </div>
 
-
-<!-- 🔥 2. Tamil History -->
 <h2 style="margin-top:50px;">Tamil History</h2>
 <div class="book-grid">
 
@@ -177,8 +175,6 @@ body{
 
 </div>
 
-
-<!-- 🔥 3. English Books -->
 <h2 style="margin-top:50px;">English Books</h2>
 <div class="book-grid">
 
@@ -208,8 +204,6 @@ body{
 
 </div>
 
-
-<!-- 🔥 4. Romance -->
 <h2 style="margin-top:50px;">Romance</h2>
 <div class="book-grid">
 
@@ -227,8 +221,6 @@ body{
 
 </div>
 
-
-<!-- 🔥 5. Self Development -->
 <h2 style="margin-top:50px;">Self Development</h2>
 <div class="book-grid">
 
@@ -252,6 +244,11 @@ body{
 function goToBook(bookName){
     localStorage.setItem("selectedBook", bookName);
     window.location.href="book details.html";
+}
+
+/* 🔥 Cart Page Redirect Function */
+function goToCart(){
+    window.location.href="cart.html";
 }
 </script>
 
