@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Secure Payment - Shelf Pick</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial, sans-serif;
+background:linear-gradient(135deg,#1e3c72,#2a5298);
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+}
+
+.payment-box{
+background:white;
+width:450px;
+padding:30px;
+border-radius:20px;
+box-shadow:0 20px 40px rgba(0,0,0,0.4);
+animation:fadeIn 0.6s ease-in-out;
+}
+
+h2{
+text-align:center;
+margin-bottom:20px;
+color:#2a5298;
+}
+
+input, select{
+width:100%;
+padding:10px;
+margin:8px 0;
+border-radius:8px;
+border:1px solid #ccc;
+}
+
+button{
+width:100%;
+padding:12px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+font-size:16px;
+margin-top:10px;
+}
+
+.pay-btn{
+background:#28a745;
+color:white;
+}
+
+.pay-btn:hover{
+background:#1e7e34;
+}
+
+.back-btn{
+background:#764ba2;
+color:white;
+}
+
+.secure{
+text-align:center;
+margin-top:10px;
+color:green;
+font-size:14px;
+}
+
+@keyframes fadeIn{
+from{opacity:0; transform:translateY(20px);}
+to{opacity:1; transform:translateY(0);}
+}
+
+</style>
+</head>
+<body>
+
+<div class="payment-box">
+
+<h2>🔐 Secure Payment</h2>
+
+<select id="method">
+<option value="card">Credit / Debit Card</option>
+<option value="upi">UPI</option>
+<option value="cod">Cash on Delivery</option>
+</select>
+
+<input type="text" placeholder="Card / UPI Number">
+<input type="text" placeholder="Name on Card">
+<input type="text" placeholder="Expiry (MM/YY)">
+<input type="password" placeholder="CVV">
+
+<button class="pay-btn" onclick="processPayment()">Pay Now</button>
+<button class="back-btn" onclick="goBack()">⬅ Back to Cart</button>
+
+<div class="secure">
+🔒 256-bit SSL Secured Payment <br>
+Powered by Razorpay
+</div>
+
+</div>
+
+<script>
+
+function processPayment(){
+alert("Payment Successful ✅");
+localStorage.removeItem("cart");
+window.location.href="book.html";
+}
+
+function goBack(){
+window.location.href="cart.html";
+}
+
+</script>
+
+</body>
+</html>
