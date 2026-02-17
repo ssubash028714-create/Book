@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shelf Pick - Cart</title>
+
+<style>
+
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:linear-gradient(135deg,#667eea,#764ba2);
+}
+
+.header{
+    background:white;
+    padding:15px 30px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+
+.logo{
+    font-size:22px;
+    font-weight:bold;
+    color:#764ba2;
+}
+
+.back-btn{
+    background:#764ba2;
+    color:white;
+    padding:8px 15px;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+.container{
+    padding:40px;
+}
+
+.cart-box{
+    background:white;
+    border-radius:15px;
+    padding:25px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.15);
+}
+
+.cart-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px 0;
+    border-bottom:1px solid #eee;
+}
+
+.cart-item:last-child{
+    border:none;
+}
+
+.item-name{
+    font-weight:bold;
+}
+
+.qty-box{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.qty-btn{
+    padding:5px 12px;
+    border:none;
+    background:#ddd;
+    border-radius:5px;
+    cursor:pointer;
+    font-size:16px;
+}
+
+.remove-btn{
+    background:red;
+    color:white;
+    border:none;
+    padding:6px 12px;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+.summary{
+    margin-top:20px;
+    padding-top:20px;
+    border-top:2px solid #eee;
+}
+
+.summary p{
+    display:flex;
+    justify-content:space-between;
+    margin:8px 0;
+}
+
+.total{
+    font-size:18px;
+    font-weight:bold;
+    color:#764ba2;
+}
+
+.checkout{
+    width:100%;
+    margin-top:20px;
+    padding:15px;
+    background:#28a745;
+    color:white;
+    border:none;
+    border-radius:8px;
+    font-size:16px;
+    cursor:pointer;
+}
+
+.empty{
+    text-align:center;
+    padding:40px;
+    font-size:18px;
+    color:gray;
+}
+
+</style>
+</head>
+<body>
+
+<div class="header">
+    <div class="logo">🛒 Shelf Pick Cart</div>
+    <button class="back-btn" onclick="goBack()">⬅ Continue Shopping</button>
+</div>
+
+<div class="container">
+    <div class="cart-box" id="cartContainer">
+    </div>
+</div>
+
+<script>
+
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+let container = document.getElementById("cartContainer");
+
+function displayCart(){
+
+    if(cart.length === 0){
+        container.innerHTML = "<div class='empty'>Your Cart is Empty 🛒</div>";
+        return;
+    }
+
+    let html = "";
+    let subtotal = 0;
+
+    cart.forEach((item,index)=>{
+        subtotal += item.price * item.qty;
+
+        html += `
+        <div class="cart-item">
+            <div>
+                <div class="item-name">${item.name}</div>
+                <div>₹${item.price}</div>
+            </div>
+
+            <div class="qty-box">
+                <button class="qty-btn" onclick="changeQty(${index},-1)">−</button>
+                ${item.qty}
+                <button class="qty-btn" onclick="changeQty(${index},1)">+</button>
+            </div>
+
+            <button class="remove-btn" onclick="removeItem(${index})">Remove</button>
+        </div>
+        `;
+    });
+
+    let delivery = subtotal > 0 ? 50 : 0;
+    let gst = subtotal * 0.05;
+    let total = subtotal + delivery + gst;
+
+    html += `
+    <div class="summary">
+        <p><span>Subtotal</span><span>₹${subtotal.toFixed(2)}</span></p>
+        <p><span>Delivery</span><span>₹${delivery}</span></p>
+        <p><span>GST (5%)</span><span>₹${gst.toFixed(2)}</span></p>
+        <p class="total"><span>Grand Total</span><span>₹${total.toFixed(2)}</span></p>
+        <button class="checkout" onclick="checkout()">Proceed to Checkout</button>
+    </div>
+    `;
+
+    container.innerHTML = html;
+}
+
+function changeQty(index,value){
+    cart[index].qty += value;
+
+    if(cart[index].qty <= 0){
+        cart.splice(index,1);
+    }
+
+    localStorage.setItem("cart",JSON.stringify(cart));
+    displayCart();
+}
+
+function removeItem(index){
+    cart.splice(index,1);
+    localStorage.setItem("cart",JSON.stringify(cart));
+    displayCart();
+}
+
+function checkout(){
+    alert("Proceeding to Payment Page...");
+}
+
+function goBack(){
+    window.location.href="book.html";
+}
+
+displayCart();
+
+</script>
+
+</body>
+</html>
